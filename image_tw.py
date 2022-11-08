@@ -1,6 +1,6 @@
 import json
 import urllib.request
-import os
+import os, sys
 from requests_oauthlib import OAuth1Session
 from env import *
 
@@ -37,8 +37,11 @@ def saveContents():
                 for count, photo in enumerate(content["extended_entities"]["media"]):   
                     title = foldername+"/"+content["id_str"]+"_"+str(count)+".jpg"  #画像のタイトル
                     image_url = photo["media_url"]      #画像のurl
-                    try:                               
-                        urllib.request.urlretrieve(image_url,title)    
+                    if os.path.exists(title):
+                        print(f"{title} is existed")
+                        continue
+                    try:                             
+                        urllib.request.urlretrieve(image_url,title) 
                         print(f"{title} is saved")
                     except:
                         print("error")
