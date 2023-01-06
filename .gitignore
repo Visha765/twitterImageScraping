@@ -1,5 +1,6 @@
 env.py
 /images
+/log
 .DS_Store
 .python-version
 __pycache__
