@@ -14,6 +14,7 @@ twitter = OAuth1Session(*[ENV[key] for key in ("CK", "CS", "AT", "AS")]) #アク
 userName = input("userName:") #取得したいアカウント名
 GET_COUNT = min(int(input("Get count:")), 200)
 GET_AT_ONCE = min(int(input("Get at once:")), 200)
+CONTINUE = input("?continue if exist images found (y/n):") == 'y'
 
 params = {
     "screen_name":userName,       
@@ -76,7 +77,10 @@ def saveContents():
                     if log.exists(title):
                         log.exists(title)
                         print(f"{title} is existed")
-                        continue
+                        if CONTINUE:
+                            continue
+                        else:
+                            sys.exit()
                     try:                             
                         urllib.request.urlretrieve(image_url, imagePath) 
                         print(f"{title} is saved") 
